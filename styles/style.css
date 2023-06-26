@@ -3,7 +3,7 @@
 
   /* colors, picked from tailwindcss */
   --clr-red: #fca5a5;
-  --clr-dark-red: #ef4444;
+  --clr-dark-red: #f87171;
   --clr-dark: #111827;
   --clr-blue: #bfdbfe;
   --clr-dark-blue: #3b82f6;
@@ -24,6 +24,7 @@
   --size-8xl: 6rem;
   --size-9xl: 8rem;
   --size-10xl: 10rem;
+  --size-11xl: 12rem;
 }
 
 * {

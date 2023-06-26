@@ -8,10 +8,24 @@
       href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
     <title>Pomodoro Timer</title>
   </head>
   <body>
-    <h1>Hello!</h1>
+    <div class="timer container">
+      <div class="timer-box">
+        <div class="timer-header">
+          <button class="timer-work">WORK</button>
+          <button class="timer-break">BREAK</button>
+          <button class="timer-setting">
+            <span class="material-symbols-outlined">settings</span>
+          </button>
+        </div>
+      </div>
+    </div>
     <script type="module" src="./src/main.js"></script>
   </body>
 </html>
