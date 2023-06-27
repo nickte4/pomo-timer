@@ -105,6 +105,7 @@
 }
 
 .btn-start,
+.btn-pause,
 .btn-restart {
   position: absolute;
   border: none;
@@ -119,9 +120,31 @@
 .btn-start span {
   font-size: var(--size-6xl);
 }
+.btn-pause {
+  top: 13.2rem;
+  left: 10.5rem;
+  display: none;
+}
+.btn-pause span {
+  font-size: var(--size-7xl);
+  font-variation-settings: "wght" 200;
+}
+
+.btn-pause span:hover {
+  font-variation-settings: "wght" 200, "FILL" 1;
+}
+
+.btn-start span:hover {
+  font-variation-settings: "FILL" 1;
+}
+
 .btn-restart {
   top: 14rem;
   left: 12.3rem;
+}
+
+.btn-restart span:hover {
+  font-variation-settings: "wght" 600;
 }
 
 /* media queries */
