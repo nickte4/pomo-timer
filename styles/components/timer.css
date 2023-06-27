@@ -50,3 +50,88 @@
   padding-bottom: 3rem;
   cursor: pointer;
 }
+
+.timer-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid red; */
+  height: 30rem;
+  position: relative;
+}
+
+.circular-progress {
+  position: relative;
+  height: 20rem;
+  width: 20rem;
+  bottom: 3rem;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--clr-dark-red) 360deg,
+    var(--clr-lighter-red) 0deg
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circular-progress::before {
+  content: "";
+  position: absolute;
+  height: 17rem;
+  width: 17rem;
+  border-radius: 50%;
+  background-color: var(--clr-red);
+}
+
+.progress-value {
+  position: relative;
+  bottom: 1rem;
+  font-weight: bold;
+  font-size: var(--size-6xl);
+}
+
+.btn-start,
+.btn-restart {
+  position: absolute;
+  border: none;
+  text-decoration: none;
+  background: none;
+  cursor: pointer;
+}
+.btn-start {
+  left: 8.3rem;
+}
+.btn-start span {
+  font-size: var(--size-6xl);
+}
+.btn-restart {
+  left: 12.3rem;
+}
+
+/* media queries */
+
+/* xs */
+/* @media (min-width: 475px) {} */
+
+/* sm */
+@media (min-width: 640px) {
+  .btn-start {
+    left: 11rem;
+  }
+  .btn-restart {
+    left: 15rem;
+  }
+}
+
+/* md */
+/* @media (min-width: 768px) {} */
+
+/* lg */
+/* @media (min-width: 1024px) {} */
+
+/* xl */
+/* @media (min-width: 1280px) {} */
+
+/* 2xl */
+/* @media (min-width: 1536px) {} */
