@@ -2,12 +2,14 @@
   --clr-background: var(--clr-red); /* insert background color */
 
   /* colors, picked from tailwindcss */
-  --clr-red: #fca5a5;
-  --clr-dark-red: #f87171;
-  --clr-lighter-red: #fecaca;
+  --clr-red: #ba4949;
+  --clr-dark-red: #a74242;
+  --clr-lighter-red: #c15c5c;
+  --clr-lightest-red: #b05f5f;
   --clr-dark: #111827;
   --clr-blue: #bfdbfe;
   --clr-dark-blue: #3b82f6;
+  --clr-light: #f1f5f9;
 
   /* sizes */
   --size-xxs: 0.5rem;
@@ -50,4 +52,8 @@ svg {
   display: block;
   max-width: 100%;
   user-select: none;
+}
+
+span {
+  color: var(--clr-light);
 }

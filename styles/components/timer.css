@@ -2,16 +2,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 8rem;
+  padding-top: 6rem;
   padding-bottom: 2rem;
 }
 
 .timer-box {
   border-radius: 2rem;
-  box-shadow: -20px 20px 50px -15px var(--clr-dark);
+  /* box-shadow: -20px 20px 50px -15px var(--clr-dark); */
+  /* box-shadow: -10px 10px 0px 0px var(--clr-dark); */
   padding: 2rem;
   width: 34rem;
   height: 40rem;
+  background: var(--clr-lighter-red);
 }
 
 .timer-header {
@@ -25,11 +27,12 @@
 
 .timer-work,
 .timer-break {
+  color: var(--clr-light);
   font-weight: 500;
   border: none;
   text-decoration: none;
   background: none;
-  box-shadow: -2px 2px 5px var(--clr-dark);
+  /* box-shadow: -2px 2px 5px var(--clr-dark); */
   border-radius: 8px;
   width: 7rem;
   height: 3rem;
@@ -42,6 +45,7 @@
 }
 
 .timer-setting {
+  position: relative;
   border: none;
   background: none;
   text-decoration: none;
@@ -49,6 +53,14 @@
   width: 3rem;
   padding-bottom: 3rem;
   cursor: pointer;
+  border-radius: 8px;
+  /* box-shadow: -2px 2px 5px var(--clr-dark); */
+}
+
+.timer-setting span {
+  position: absolute;
+  right: 0.005rem;
+  bottom: 0.05rem;
 }
 
 .timer-circle {
@@ -68,11 +80,12 @@
   border-radius: 50%;
   background: conic-gradient(
     var(--clr-dark-red) 360deg,
-    var(--clr-lighter-red) 0deg
+    var(--clr-lightest-red) 0deg
   );
   display: flex;
   justify-content: center;
   align-items: center;
+  /* box-shadow: -15px 15px 30px -15px var(--clr-dark); */
 }
 
 .circular-progress::before {
@@ -86,9 +99,9 @@
 
 .progress-value {
   position: relative;
-  bottom: 1rem;
+  bottom: 1.5rem;
   font-weight: bold;
-  font-size: var(--size-6xl);
+  font-size: var(--size-7xl);
 }
 
 .btn-start,
@@ -100,12 +113,14 @@
   cursor: pointer;
 }
 .btn-start {
+  top: 13.6rem;
   left: 8.3rem;
 }
 .btn-start span {
   font-size: var(--size-6xl);
 }
 .btn-restart {
+  top: 14rem;
   left: 12.3rem;
 }
 

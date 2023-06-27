@@ -35,7 +35,7 @@ function activateTimer(start) {
     progressValue.textContent = secondsToMinSec(now);
     circularProgress.style.background = `conic-gradient(var(--clr-dark-red) ${
       ((now - timerEnd) / timerStart) * 360
-    }deg, var(--clr-lighter-red) 0deg)`;
+    }deg, var(--clr-lightest-red) 0deg)`;
 
     if (now == timerEnd) {
       clearInterval(progress);
@@ -43,4 +43,4 @@ function activateTimer(start) {
   }, speed);
 }
 
-activateTimer(120);
+activateTimer(10);
