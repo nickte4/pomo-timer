@@ -33,6 +33,14 @@
   font-size: var(--size-5xl);
 }
 
+.hoverBlue:hover {
+  background-color: var(--clr-dark-blue) !important;
+}
+
+.hoverRed:hover {
+  background-color: var(--clr-dark-red) !important;
+}
+
 /* xs */
 @media (min-width: 475px) {
   .container {

@@ -93,10 +93,15 @@ function startTimer() {
   progress = setInterval(() => {
     now--;
     progressValue.textContent = secondsToMinSec(now);
-    circularProgress.style.background = `conic-gradient(var(--clr-dark-red) ${
-      ((now - timerEnd) / timerStart) * 360
-    }deg, var(--clr-lightest-red) 0deg)`;
-
+    if (workMode) {
+      circularProgress.style.background = `conic-gradient(var(--clr-dark-red) ${
+        ((now - timerEnd) / timerStart) * 360
+      }deg, var(--clr-lightest-red) 0deg)`;
+    } else {
+      circularProgress.style.background = `conic-gradient(var(--clr-dark-blue) ${
+        ((now - timerEnd) / timerStart) * 360
+      }deg, var(--clr-lightest-blue) 0deg)`;
+    }
     if (now == timerEnd) {
       progressValue.textContent = "0:00";
       let completedAudio = new Audio("../audio/success.mp3");
@@ -138,8 +143,13 @@ function restartDisplay() {
   let progressValue = document.querySelector(".progress-value");
   now = timerStart;
   progressValue.textContent = secondsToMinSec(now);
-  circularProgress.style.background =
-    "conic-gradient(var(--clr-dark-red) 360deg, var(--clr-lightest-red) 0deg)";
+  if (workMode) {
+    circularProgress.style.background =
+      "conic-gradient(var(--clr-dark-red) 360deg, var(--clr-lightest-red) 0deg)";
+  } else {
+    circularProgress.style.background =
+      "conic-gradient(var(--clr-dark-blue) 360deg, var(--clr-lightest-blue) 0deg)";
+  }
   startBtn.style.display = "block";
   pauseBtn.style.display = "none";
   startBtn.disabled = false;
@@ -171,7 +181,7 @@ function listenForMinuteSettingsChange() {
     if (workMode) {
       timerStart = workSec;
       updateLabels(workSec);
-      restartDisplay(workSec);
+      restartDisplay();
     }
     setTimerAmt([workSec, breakSec]);
   });
@@ -180,7 +190,7 @@ function listenForMinuteSettingsChange() {
     if (!workMode) {
       timerStart = breakSec;
       updateLabels(breakSec);
-      restartDisplay(breakSec);
+      restartDisplay();
     }
     setTimerAmt([workSec, breakSec]);
   });
@@ -202,6 +212,90 @@ function listenForCloseSettingsBtn() {
   });
 }
 
+function listenForWorkBtn() {
+  let workBtn = document.querySelector(".timer__work");
+  workBtn.addEventListener("click", () => {
+    changeToWorkColors();
+    workMode = true;
+    timerStart = workSec;
+    restartDisplay();
+  });
+}
+
+function listenForBreakBtn() {
+  let breakBtn = document.querySelector(".timer__break");
+  breakBtn.addEventListener("click", () => {
+    changeToBreakColors();
+    workMode = false;
+    timerStart = breakSec;
+    restartDisplay();
+  });
+}
+
+function changeToBreakColors() {
+  /* list of colors to change:
+  body.style.bockground -> blue
+  .timer__box -> light blue
+  .timer__work:hover -> dark blue [SPECIAL CSS]
+  .timer__break backgound -> dark blue
+  .circular-progress::before -> blue [SPECIAL CSS]
+  .timer__dialog_vol_slider accent-color -> blue
+    circle outline empty -> lightest blue [IN FUNCTIONS]
+  */
+  document.body.style.background = "var(--clr-blue)";
+  document.querySelector(".timer__box").style.background =
+    "var(--clr-light-blue)";
+  document.querySelector(".timer__work").style.background = "none";
+  document.querySelector(".timer__break").style.background =
+    "var(--clr-dark-blue)";
+  document
+    .getElementById("timer__break")
+    .classList.remove("hoverRed", "hoverBlue");
+  document.getElementById("timer__work").classList.add("hoverBlue");
+  document.querySelector(".timer__dialog_vol_slider").style.accentColor =
+    "var(--clr-blue)";
+  document
+    .getElementById("circular-progress")
+    .classList.remove("inner-circle-red");
+  document
+    .getElementById("circular-progress")
+    .classList.add("inner-circle-blue");
+  document.querySelector(".circular-progress").style.background =
+    "conic-gradient(var(--clr-dark-blue) 360deg, var(--clr-lightest-blue) 0deg)";
+}
+
+function changeToWorkColors() {
+  /* list of colors to change:
+  body.style.bockground -> red
+  .timer__box -> lighter red
+  .timer__break:hover -> dark red [SPECIAL CSS]
+  .timer__work backgound -> dark red
+  .circular-progress::before -> red; [SPECIAL CSS]
+  .timer__dialog_vol_slider accent-color -> red
+  circle outline empty -> lightest red [IN FUNCTIONS]
+  */
+  document.body.style.background = "var(--clr-red)";
+  document.querySelector(".timer__box").style.background =
+    "var(--clr-lighter-red)";
+  document.querySelector(".timer__work").style.background =
+    "var(--clr-dark-red)";
+  document.querySelector(".timer__break").style.background = "none";
+  document
+    .getElementById("timer__work")
+    .classList.remove("hoverBlue", "hoverRed");
+  document.getElementById("timer__break").classList.add("hoverRed");
+  document.querySelector(".timer__dialog_vol_slider").style.accentColor =
+    "var(--clr-red)";
+  document
+    .getElementById("circular-progress")
+    .classList.remove("inner-circle-blue");
+  document
+    .getElementById("circular-progress")
+    .classList.add("inner-circle-red");
+  document.querySelector(".circular-progress").style.background =
+    "conic-gradient(var(--clr-dark-red) 360deg, var(--clr-lightest-red) 0deg)";
+}
+
 function updateLabels(timerAmt) {
   let progressValue = document.querySelector(".progress-value");
   progressValue.textContent = secondsToMinSec(timerAmt);
@@ -213,6 +307,8 @@ function listenToAllEvents() {
   listenForRestartBtn();
   listenForOpenSettingsBtn();
   listenForCloseSettingsBtn();
+  listenForWorkBtn();
+  listenForBreakBtn();
   listenForMinuteSettingsChange();
   listenForVolSliderChange();
 }

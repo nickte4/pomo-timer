@@ -38,6 +38,7 @@
   height: 3rem;
   cursor: pointer;
   font-size: var(--size-2xl);
+  transition: background 0.2s;
 }
 
 .timer__work {
@@ -103,6 +104,14 @@
   width: 17rem;
   border-radius: 50%;
   background-color: var(--clr-red);
+}
+
+.inner-circle-red::before {
+  background-color: var(--clr-red);
+}
+
+.inner-circle-blue::before {
+  background-color: var(--clr-blue);
 }
 
 .progress-value {
@@ -215,7 +224,7 @@
   margin-top: 1rem;
   margin-left: 1rem;
   color: var(--clr-dark);
-  font-size: var(--size-3xl);
+  font-size: var(--size-2xl);
 }
 
 .timer__dialog_subtitle_auto_start {
