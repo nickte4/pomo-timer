@@ -227,11 +227,66 @@
   font-size: var(--size-2xl);
 }
 
-.timer__dialog_subtitle_auto_start {
+.timer__dialog_auto_start_container {
   margin-top: 3rem;
   margin-left: 1rem;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+}
+
+.timer__dialog_subtitle_auto_start {
   color: var(--clr-dark);
   font-size: var(--size-2xl);
+}
+
+.timer__dialog_auto_start_toggle_container {
+  margin-top: 0.5rem;
+  position: relative;
+  width: 4rem;
+  height: 2.5rem;
+}
+
+.timer__dialog_auto_start_toggle {
+  position: absolute;
+  width: 4rem;
+  height: 2rem;
+  z-index: 1;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.timer__dialog_auto_start_toggle_slider {
+  position: absolute;
+  width: 4rem;
+  height: 2rem;
+  background-color: var(--clr-light-gray);
+  transition: 0.4s;
+  border-radius: 15px;
+}
+
+.timer__dialog_auto_start_toggle_slider:before {
+  content: "";
+  position: absolute;
+  top: 0.15rem;
+  left: 0.2rem;
+  height: 1.75rem;
+  width: 1.75rem;
+  border-radius: 50%;
+  transition: 0.5s;
+  background-color: var(--clr-lightest-gray);
+}
+
+.timer__dialog_auto_start_toggle:checked
+  + .timer__dialog_auto_start_toggle_slider {
+  background-color: var(--clr-red);
+}
+
+.timer__dialog_auto_start_toggle:checked
+  + .timer__dialog_auto_start_toggle_slider:before {
+  transform: translateX(1.9rem);
 }
 
 .timer__dialog_minute_box_header {

@@ -8,10 +8,18 @@ let timerArr = retrieveTimerAmt();
 let workSec = timerArr[0];
 let breakSec = timerArr[1];
 let timerStart = workMode ? workSec : breakSec;
+let autoStart = retrieveAutoStart();
 const timerEnd = 0;
 let now = timerStart;
 let progress;
 let audioVolume = retrieveVolAmt();
+
+function retrieveAutoStart() {
+  if (!window.localStorage.getItem("auto_start")) {
+    window.localStorage.setItem("auto_start", "true");
+  }
+  return window.localStorage.getItem("auto_start") === "true";
+}
 
 function retrieveVolAmt() {
   if (!window.localStorage.getItem("vol_amt")) {
@@ -24,7 +32,7 @@ function retrieveLastMode() {
   if (!window.localStorage.getItem("work_mode")) {
     window.localStorage.setItem("work_mode", "true");
   }
-  return window.localStorage.getItem("work_mode");
+  return window.localStorage.getItem("work_mode") === "true";
 }
 
 function retrieveTimerAmt() {
@@ -39,6 +47,14 @@ function retrieveTimerAmt() {
   return [workAmt, breakAmt];
 }
 
+function setAutoStart(mode) {
+  window.localStorage.setItem("auto_start", mode);
+}
+
+function setLastMode(mode) {
+  window.localStorage.setItem("work_mode", mode);
+}
+
 function setVolAmt(volAmt) {
   window.localStorage.setItem("vol_amt", volAmt);
 }
@@ -46,6 +62,12 @@ function setVolAmt(volAmt) {
 function setTimerAmt(timerAmt) {
   window.localStorage.setItem("work_amt", timerAmt[0]);
   window.localStorage.setItem("break_amt", timerAmt[1]);
+}
+
+function setInitSettingsAutoStart() {
+  let autoToggle = document.querySelector(".timer__dialog_auto_start_toggle");
+  autoToggle.checked = retrieveAutoStart();
+  checkAutoToggle();
 }
 
 function setInitSettingsVolAmt() {
@@ -63,7 +85,17 @@ function setInitSettingsTimerAmt() {
 function setInitialTimer() {
   let timerAmt = retrieveTimerAmt();
   let progressValue = document.querySelector(".progress-value");
-  progressValue.textContent = secondsToMinSec(timerAmt[0]);
+  progressValue.textContent = workMode
+    ? secondsToMinSec(timerAmt[0])
+    : secondsToMinSec(timerAmt[1]);
+}
+
+function setInitMode() {
+  if (workMode) {
+    changeToWorkColors();
+  } else {
+    changeToBreakColors();
+  }
 }
 
 // converts the seconds into a readable min:sec format
@@ -102,6 +134,7 @@ function startTimer() {
         ((now - timerEnd) / timerStart) * 360
       }deg, var(--clr-lightest-blue) 0deg)`;
     }
+
     if (now == timerEnd) {
       progressValue.textContent = "0:00";
       let completedAudio = new Audio("../audio/success.mp3");
@@ -109,7 +142,12 @@ function startTimer() {
       pauseBtn.disabled = true;
       completedAudio.volume = audioVolume;
       completedAudio.play();
-      clearInterval(progress);
+      if (autoStart) {
+        changeMode(!workMode);
+        startTimer();
+      } else {
+        clearInterval(progress);
+      }
     }
   }, speed);
 }
@@ -212,24 +250,71 @@ function listenForCloseSettingsBtn() {
   });
 }
 
+function changeMode(mode) {
+  if (mode) {
+    changeToWorkColors();
+    workMode = true;
+    setLastMode(true);
+    timerStart = workSec;
+    checkAutoToggle();
+    restartDisplay();
+  } else {
+    changeToBreakColors();
+    workMode = false;
+    setLastMode(false);
+    timerStart = breakSec;
+    checkAutoToggle();
+    restartDisplay();
+  }
+}
+
 function listenForWorkBtn() {
   let workBtn = document.querySelector(".timer__work");
   workBtn.addEventListener("click", () => {
-    changeToWorkColors();
-    workMode = true;
-    timerStart = workSec;
-    restartDisplay();
+    changeMode(true);
   });
 }
 
 function listenForBreakBtn() {
   let breakBtn = document.querySelector(".timer__break");
   breakBtn.addEventListener("click", () => {
-    changeToBreakColors();
-    workMode = false;
-    timerStart = breakSec;
-    restartDisplay();
+    changeMode(false);
   });
+}
+
+function listenForAutoStartToggle() {
+  let autoToggle = document.querySelector(".timer__dialog_auto_start_toggle");
+  autoToggle.addEventListener("input", () => {
+    autoStart = autoToggle.checked;
+    checkAutoToggle();
+  });
+}
+
+function checkAutoToggle() {
+  let autoToggle = document.querySelector(".timer__dialog_auto_start_toggle");
+  if (autoToggle.checked) {
+    setAutoStart(true);
+    fillSlider();
+  } else {
+    setAutoStart(false);
+    emptySlider();
+  }
+}
+
+function fillSlider() {
+  let autoSlider = document.querySelector(
+    ".timer__dialog_auto_start_toggle_slider"
+  );
+  autoSlider.style.backgroundColor = workMode
+    ? "var(--clr-red)"
+    : "var(--clr-blue)";
+}
+
+function emptySlider() {
+  let autoSlider = document.querySelector(
+    ".timer__dialog_auto_start_toggle_slider"
+  );
+  autoSlider.style.backgroundColor = "var(--clr-light-gray)";
 }
 
 function changeToBreakColors() {
@@ -307,13 +392,16 @@ function listenToAllEvents() {
   listenForRestartBtn();
   listenForOpenSettingsBtn();
   listenForCloseSettingsBtn();
+  listenForAutoStartToggle();
   listenForWorkBtn();
   listenForBreakBtn();
   listenForMinuteSettingsChange();
   listenForVolSliderChange();
 }
 
+setInitMode();
 setInitialTimer();
 setInitSettingsTimerAmt();
+setInitSettingsAutoStart();
 setInitSettingsVolAmt();
 listenToAllEvents();
