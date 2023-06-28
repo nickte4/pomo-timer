@@ -2,6 +2,8 @@ import "../styles/modern-normalize.css";
 import "../styles/style.css";
 import "../styles/components/timer.css";
 import "../styles/utils.css";
+import workCompletionSound from "../audio/success.mp3";
+import breakCompletionSound from "../audio/notif.mp3";
 
 let workMode = retrieveLastMode();
 let timerArr = retrieveTimerAmt();
@@ -13,6 +15,10 @@ const timerEnd = 0;
 let now = timerStart;
 let progress;
 let audioVolume = retrieveVolAmt();
+const workAudio = new Audio(workCompletionSound);
+const breakAudio = new Audio(breakCompletionSound);
+workAudio.volume = audioVolume;
+breakAudio.volume = audioVolume;
 
 function retrieveAutoStart() {
   if (!window.localStorage.getItem("auto_start")) {
@@ -140,13 +146,9 @@ function startTimer() {
       startBtn.disabled = true;
       pauseBtn.disabled = true;
       if (workMode) {
-        let completedAudio = new Audio("../audio/success.mp3");
-        completedAudio.volume = audioVolume;
-        completedAudio.play();
+        workAudio.play();
       } else {
-        let completedAudio = new Audio("../audio/notif.mp3");
-        completedAudio.volume = audioVolume;
-        completedAudio.play();
+        breakAudio.play();
       }
       if (autoStart) {
         changeMode(!workMode);
@@ -246,6 +248,8 @@ function listenForVolSliderChange() {
   let volSlider = document.querySelector(".timer__dialog_vol_slider");
   volSlider.addEventListener("input", () => {
     audioVolume = volSlider.value / 100;
+    workAudio.volume = audioVolume;
+    breakAudio.volume = audioVolume;
     setVolAmt(audioVolume);
   });
 }
