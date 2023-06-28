@@ -170,6 +170,32 @@
   outline: none;
 }
 
+.timer__dialog_header_container {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  position: relative;
+}
+
+.timer__dialog_header_container span {
+  color: var(--clr-light-gray);
+  opacity: 0.6;
+}
+
+.timer__dialog_header_container span:hover {
+  opacity: 1;
+}
+
+.btn-close-dialog {
+  border: none;
+  background: none;
+  position: absolute;
+  right: 0.5rem;
+  top: 0.3rem;
+  cursor: pointer;
+  outline: none;
+}
+
 .timer__dialog_header {
   font-size: var(--size-4xl);
   color: var(--clr-gray);

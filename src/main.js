@@ -155,7 +155,7 @@ function listenForRestartBtn() {
   });
 }
 
-function listenForSettingsBtn() {
+function listenForOpenSettingsBtn() {
   let settingsBtn = document.querySelector(".timer__setting");
   let dialog = document.querySelector(".timer__dialog");
   settingsBtn.addEventListener("click", () => {
@@ -194,6 +194,14 @@ function listenForVolSliderChange() {
   });
 }
 
+function listenForCloseSettingsBtn() {
+  let closeBtn = document.querySelector(".btn-close-dialog");
+  let dialog = document.querySelector(".timer__dialog");
+  closeBtn.addEventListener("click", () => {
+    dialog.close();
+  });
+}
+
 function updateLabels(timerAmt) {
   let progressValue = document.querySelector(".progress-value");
   progressValue.textContent = secondsToMinSec(timerAmt);
@@ -203,7 +211,8 @@ function listenToAllEvents() {
   listenForStartBtn();
   listenForPauseBtn();
   listenForRestartBtn();
-  listenForSettingsBtn();
+  listenForOpenSettingsBtn();
+  listenForCloseSettingsBtn();
   listenForMinuteSettingsChange();
   listenForVolSliderChange();
 }
