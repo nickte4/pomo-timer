@@ -209,6 +209,25 @@
   color: var(--clr-light-gray);
 }
 
+.timer__dialog_minute_box {
+  margin-top: 0.3rem;
+  margin-left: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+}
+
+.timer__dialog_work_mins,
+.timer__dialog_break_mins {
+  outline: none;
+  border-radius: 0;
+  border: none;
+  background-color: var(--clr-lightest-gray);
+  height: 2rem;
+  width: 5rem;
+}
+
 /* media queries */
 
 /* xs */

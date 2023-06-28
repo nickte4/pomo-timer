@@ -3,28 +3,51 @@ import "../styles/style.css";
 import "../styles/components/timer.css";
 import "../styles/utils.css";
 
-let timerStart = retrieveTimerAmt();
+let workMode = retrieveLastMode();
+let timerArr = retrieveTimerAmt();
+let workMin = timerArr[0];
+let breakMin = timerArr[1];
+let timerStart = workMode ? workMin : breakMin;
 const timerEnd = 0;
 let now = timerStart;
 let progress;
 let audioVolume = 0.1;
 
-function retrieveTimerAmt() {
-  if (!window.localStorage.getItem("timer_amt")) {
-    window.localStorage.setItem("timer_amt", "1500");
+function retrieveLastMode() {
+  if (!window.localStorage.getItem("work_mode")) {
+    window.localStorage.setItem("work_mode", "true");
   }
-  return parseInt(window.localStorage.getItem("timer_amt"));
+  return window.localStorage.getItem("work_mode");
+}
+
+function retrieveTimerAmt() {
+  if (!window.localStorage.getItem("work_amt")) {
+    window.localStorage.setItem("work_amt", "1500");
+  }
+  if (!window.localStorage.getItem("break_amt")) {
+    window.localStorage.setItem("break_amt", "300");
+  }
+  let workAmt = parseInt(window.localStorage.getItem("work_amt"));
+  let breakAmt = parseInt(window.localStorage.getItem("break_amt"));
+  return [workAmt, breakAmt];
 }
 
 function setTimerAmt(timerAmt) {
-  window.localStorage.setItem("timer_amt", timerAmt);
+  window.localStorage.setItem("work_amt", timerAmt[0]);
+  window.localStorage.setItem("break_amt", timerAmt[1]);
+}
+
+function setInitSettingsTimerAmt() {
+  let workSettings = document.getElementById("timer__dialog_work_mins");
+  let breakSettings = document.getElementById("timer__dialog_break_mins");
+  workSettings.value = workMin;
+  breakSettings.value = breakMin;
 }
 
 function setInitialTimer() {
   let timerAmt = retrieveTimerAmt();
   let progressValue = document.querySelector(".progress-value");
-  progressValue.textContent = secondsToMinSec(timerAmt);
-  return timerAmt;
+  progressValue.textContent = secondsToMinSec(timerAmt[0]);
 }
 
 // converts the seconds into a readable min:sec format
@@ -120,12 +143,25 @@ function listenForSettingsBtn() {
   });
 }
 
-function listenToAllBtns() {
+function listenForMinuteSettingsChange() {
+  let workSettings = document.getElementById("timer__dialog_work_mins");
+  let breakSettings = document.getElementById("timer__dialog_break_mins");
+  workSettings.addEventListener("input", () => {
+    setTimerAmt(workSettings.value, breakMin);
+  });
+  breakSettings.addEventListener("input", () => {
+    setTimerAmt(workMin, breakSettings.value);
+  });
+}
+
+function listenToAllEvents() {
   listenForStartBtn();
   listenForPauseBtn();
   listenForRestartBtn();
   listenForSettingsBtn();
+  listenForMinuteSettingsChange();
 }
 
 setInitialTimer();
-listenToAllBtns();
+setInitSettingsTimerAmt();
+listenToAllEvents();
