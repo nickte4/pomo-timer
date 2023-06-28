@@ -5,9 +5,9 @@ import "../styles/utils.css";
 
 let workMode = retrieveLastMode();
 let timerArr = retrieveTimerAmt();
-let workMin = timerArr[0];
-let breakMin = timerArr[1];
-let timerStart = workMode ? workMin : breakMin;
+let workSec = timerArr[0];
+let breakSec = timerArr[1];
+let timerStart = workMode ? workSec : breakSec;
 const timerEnd = 0;
 let now = timerStart;
 let progress;
@@ -40,8 +40,8 @@ function setTimerAmt(timerAmt) {
 function setInitSettingsTimerAmt() {
   let workSettings = document.getElementById("timer__dialog_work_mins");
   let breakSettings = document.getElementById("timer__dialog_break_mins");
-  workSettings.value = workMin;
-  breakSettings.value = breakMin;
+  workSettings.value = workSec / 60;
+  breakSettings.value = breakSec / 60;
 }
 
 function setInitialTimer() {
@@ -115,23 +115,27 @@ function listenForPauseBtn() {
   });
 }
 
-function listenForRestartBtn() {
+function restartDisplay() {
   let startBtn = document.querySelector(".btn-start");
   let pauseBtn = document.querySelector(".btn-pause");
-  let restartBtn = document.querySelector(".btn-restart");
   let circularProgress = document.querySelector(".circular-progress");
   let progressValue = document.querySelector(".progress-value");
+  now = timerStart;
+  progressValue.textContent = secondsToMinSec(now);
+  circularProgress.style.background =
+    "conic-gradient(var(--clr-dark-red) 360deg, var(--clr-lightest-red) 0deg)";
+  startBtn.style.display = "block";
+  pauseBtn.style.display = "none";
+  startBtn.disabled = false;
+  pauseBtn.disabled = false;
+  clearInterval(progress);
+}
+
+function listenForRestartBtn() {
+  let restartBtn = document.querySelector(".btn-restart");
   restartBtn.addEventListener("click", () => {
     // console.log("restart!");
-    now = timerStart;
-    progressValue.textContent = secondsToMinSec(now);
-    circularProgress.style.background =
-      "conic-gradient(var(--clr-dark-red) 360deg, var(--clr-lightest-red) 0deg)";
-    startBtn.style.display = "block";
-    pauseBtn.style.display = "none";
-    startBtn.disabled = false;
-    pauseBtn.disabled = false;
-    clearInterval(progress);
+    restartDisplay();
   });
 }
 
@@ -147,13 +151,28 @@ function listenForMinuteSettingsChange() {
   let workSettings = document.getElementById("timer__dialog_work_mins");
   let breakSettings = document.getElementById("timer__dialog_break_mins");
   workSettings.addEventListener("input", () => {
-    workMin = Math.floor(workSettings.value * 60);
-    setTimerAmt(workMin, breakMin);
+    workSec = Math.floor(workSettings.value * 60);
+    if (workMode) {
+      timerStart = workSec;
+      updateLabels(workSec);
+      restartDisplay(workSec);
+    }
+    setTimerAmt([workSec, breakSec]);
   });
   breakSettings.addEventListener("input", () => {
-    breakMin = Math.floor(breakSettings.value * 60);
-    setTimerAmt(workMin, breakMin);
+    breakSec = Math.floor(breakSettings.value * 60);
+    if (!workMode) {
+      timerStart = breakSec;
+      updateLabels(breakSec);
+      restartDisplay(breakSec);
+    }
+    setTimerAmt([workSec, breakSec]);
   });
+}
+
+function updateLabels(timerAmt) {
+  let progressValue = document.querySelector(".progress-value");
+  progressValue.textContent = secondsToMinSec(timerAmt);
 }
 
 function listenToAllEvents() {
