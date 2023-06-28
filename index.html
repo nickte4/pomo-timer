@@ -65,8 +65,18 @@
             max="1440"
           />
         </div>
-        <h1 class="timer__dialog_subtitle">Auto Start Work/Breaks</h1>
-        <h1 class="timer__dialog_subtitle">Volume</h1>
+        <h1 class="timer__dialog_subtitle_auto_start">
+          Auto Start Work/Breaks
+        </h1>
+        <div class="timer__dialog_vol_slider_container">
+          <h1 class="timer__dialog_subtitle_vol">Volume</h1>
+          <input
+            type="range"
+            min="1"
+            max="100"
+            class="timer__dialog_vol_slider"
+          />
+        </div>
       </dialog>
     </div>
     <script type="module" src="./src/main.js"></script>

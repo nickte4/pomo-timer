@@ -192,7 +192,7 @@
   font-size: var(--size-3xl);
 }
 
-.timer__dialog_subtitle {
+.timer__dialog_subtitle_auto_start {
   margin-top: 3rem;
   margin-left: 1rem;
   color: var(--clr-dark);
@@ -226,6 +226,28 @@
   background-color: var(--clr-lightest-gray);
   height: 2rem;
   width: 5rem;
+}
+
+.timer__dialog_vol_slider_container {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 4rem;
+}
+
+.timer__dialog_subtitle_vol {
+  color: var(--clr-dark);
+  font-size: var(--size-2xl);
+  margin-left: 1rem;
+}
+
+.timer__dialog_vol_slider {
+  accent-color: var(--clr-red);
+  outline: none;
+  border: none;
+  width: 12rem;
+  opacity: 0.8;
 }
 
 /* media queries */

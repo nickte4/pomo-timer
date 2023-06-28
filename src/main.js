@@ -11,7 +11,14 @@ let timerStart = workMode ? workSec : breakSec;
 const timerEnd = 0;
 let now = timerStart;
 let progress;
-let audioVolume = 0.1;
+let audioVolume = retrieveVolAmt();
+
+function retrieveVolAmt() {
+  if (!window.localStorage.getItem("vol_amt")) {
+    window.localStorage.setItem("vol_amt", "0.2");
+  }
+  return parseFloat(window.localStorage.getItem("vol_amt"));
+}
 
 function retrieveLastMode() {
   if (!window.localStorage.getItem("work_mode")) {
@@ -32,9 +39,18 @@ function retrieveTimerAmt() {
   return [workAmt, breakAmt];
 }
 
+function setVolAmt(volAmt) {
+  window.localStorage.setItem("vol_amt", volAmt);
+}
+
 function setTimerAmt(timerAmt) {
   window.localStorage.setItem("work_amt", timerAmt[0]);
   window.localStorage.setItem("break_amt", timerAmt[1]);
+}
+
+function setInitSettingsVolAmt() {
+  let volSlider = document.querySelector(".timer__dialog_vol_slider");
+  volSlider.value = audioVolume * 100;
 }
 
 function setInitSettingsTimerAmt() {
@@ -170,6 +186,14 @@ function listenForMinuteSettingsChange() {
   });
 }
 
+function listenForVolSliderChange() {
+  let volSlider = document.querySelector(".timer__dialog_vol_slider");
+  volSlider.addEventListener("input", () => {
+    audioVolume = volSlider.value / 100;
+    setVolAmt(audioVolume);
+  });
+}
+
 function updateLabels(timerAmt) {
   let progressValue = document.querySelector(".progress-value");
   progressValue.textContent = secondsToMinSec(timerAmt);
@@ -181,8 +205,10 @@ function listenToAllEvents() {
   listenForRestartBtn();
   listenForSettingsBtn();
   listenForMinuteSettingsChange();
+  listenForVolSliderChange();
 }
 
 setInitialTimer();
 setInitSettingsTimerAmt();
+setInitSettingsVolAmt();
 listenToAllEvents();
