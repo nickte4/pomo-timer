@@ -112,12 +112,19 @@ function listenForRestartBtn() {
   });
 }
 
-function listenForSettingsBtn() {}
+function listenForSettingsBtn() {
+  let settingsBtn = document.querySelector(".timer__setting");
+  let dialog = document.querySelector(".timer__dialog");
+  settingsBtn.addEventListener("click", () => {
+    dialog.showModal();
+  });
+}
 
 function listenToAllBtns() {
   listenForStartBtn();
   listenForPauseBtn();
   listenForRestartBtn();
+  listenForSettingsBtn();
 }
 
 setInitialTimer();

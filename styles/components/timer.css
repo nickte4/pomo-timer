@@ -6,7 +6,7 @@
   padding-bottom: 2rem;
 }
 
-.timer-box {
+.timer__box {
   border-radius: 2rem;
   /* box-shadow: -20px 20px 50px -15px var(--clr-dark); */
   /* box-shadow: -10px 10px 0px 0px var(--clr-dark); */
@@ -16,7 +16,7 @@
   background: var(--clr-lighter-red);
 }
 
-.timer-header {
+.timer__header {
   /* border: 1px red solid; */
   height: 7rem;
   display: flex;
@@ -25,8 +25,8 @@
   align-items: center;
 }
 
-.timer-work,
-.timer-break {
+.timer__work,
+.timer__break {
   color: var(--clr-light);
   font-weight: 500;
   border: none;
@@ -40,11 +40,11 @@
   font-size: var(--size-2xl);
 }
 
-.timer-work {
+.timer__work {
   background: var(--clr-dark-red);
 }
 
-.timer-setting {
+.timer__setting {
   position: relative;
   border: none;
   background: none;
@@ -57,13 +57,21 @@
   /* box-shadow: -2px 2px 5px var(--clr-dark); */
 }
 
-.timer-setting span {
+.timer__setting:focus {
+  outline: none;
+}
+
+.timer__setting span {
   position: absolute;
   right: 0.005rem;
   bottom: 0.05rem;
 }
 
-.timer-circle {
+.timer__setting span:hover {
+  font-variation-settings: "FILL" 1;
+}
+
+.timer__circle {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -113,18 +121,22 @@
   background: none;
   cursor: pointer;
 }
+
 .btn-start {
   top: 13.6rem;
   left: 8.3rem;
 }
+
 .btn-start span {
   font-size: var(--size-6xl);
 }
+
 .btn-pause {
   top: 13.2rem;
   left: 10.5rem;
   display: none;
 }
+
 .btn-pause span {
   font-size: var(--size-7xl);
   font-variation-settings: "wght" 200;
@@ -145,6 +157,56 @@
 
 .btn-restart span:hover {
   font-variation-settings: "wght" 600;
+}
+
+.timer__dialog {
+  margin-top: 8rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 28rem;
+  height: 40rem;
+  border-radius: 2rem;
+  border: none;
+  outline: none;
+}
+
+.timer__dialog_header {
+  font-size: var(--size-4xl);
+  color: var(--clr-gray);
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.timer__dialog hr {
+  margin-top: 0.5rem;
+}
+
+.timer__dialog::backdrop {
+  backdrop-filter: blur(5px);
+}
+
+.timer__dialog_time_header {
+  margin-top: 1rem;
+  margin-left: 1rem;
+  color: var(--clr-dark);
+  font-size: var(--size-3xl);
+}
+
+.timer__dialog_subtitle {
+  margin-top: 3rem;
+  margin-left: 1rem;
+  color: var(--clr-dark);
+  font-size: var(--size-2xl);
+}
+
+.timer__dialog_minute_box_header {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5rem;
+  font-size: var(--size-sm);
+  color: var(--clr-light-gray);
 }
 
 /* media queries */

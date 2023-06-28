@@ -16,15 +16,15 @@
   </head>
   <body>
     <div class="timer container">
-      <div class="timer-box">
-        <div class="timer-header">
-          <button class="timer-work">WORK</button>
-          <button class="timer-break">BREAK</button>
-          <button class="timer-setting">
+      <div class="timer__box">
+        <div class="timer__header">
+          <button class="timer__work">WORK</button>
+          <button class="timer__break">BREAK</button>
+          <button class="timer__setting">
             <span class="material-symbols-outlined">settings</span>
           </button>
         </div>
-        <div class="timer-circle">
+        <div class="timer__circle">
           <div class="circular-progress">
             <span class="progress-value"></span>
           </div>
@@ -39,6 +39,20 @@
           </button>
         </div>
       </div>
+    </div>
+    <div class="container">
+      <dialog class="timer__dialog">
+        <h1 class="timer__dialog_header">Settings</h1>
+        <hr />
+        <h1 class="timer__dialog_time_header">Time (minutes)</h1>
+        <div class="timer__dialog_minute_box_header">
+          <h2>Work</h2>
+          <h2>Break</h2>
+        </div>
+        <div class="timer__dialog_minute_box"></div>
+        <h1 class="timer__dialog_subtitle">Auto Start Work/Breaks</h1>
+        <h1 class="timer__dialog_subtitle">Volume</h1>
+      </dialog>
     </div>
     <script type="module" src="./src/main.js"></script>
   </body>
