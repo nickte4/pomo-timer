@@ -147,10 +147,12 @@ function listenForMinuteSettingsChange() {
   let workSettings = document.getElementById("timer__dialog_work_mins");
   let breakSettings = document.getElementById("timer__dialog_break_mins");
   workSettings.addEventListener("input", () => {
-    setTimerAmt(workSettings.value, breakMin);
+    workMin = Math.floor(workSettings.value * 60);
+    setTimerAmt(workMin, breakMin);
   });
   breakSettings.addEventListener("input", () => {
-    setTimerAmt(workMin, breakSettings.value);
+    breakMin = Math.floor(breakSettings.value * 60);
+    setTimerAmt(workMin, breakMin);
   });
 }
 
