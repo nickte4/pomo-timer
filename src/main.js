@@ -137,11 +137,17 @@ function startTimer() {
 
     if (now == timerEnd) {
       progressValue.textContent = "0:00";
-      let completedAudio = new Audio("../audio/success.mp3");
       startBtn.disabled = true;
       pauseBtn.disabled = true;
-      completedAudio.volume = audioVolume;
-      completedAudio.play();
+      if (workMode) {
+        let completedAudio = new Audio("../audio/success.mp3");
+        completedAudio.volume = audioVolume;
+        completedAudio.play();
+      } else {
+        let completedAudio = new Audio("../audio/notif.mp3");
+        completedAudio.volume = audioVolume;
+        completedAudio.play();
+      }
       if (autoStart) {
         changeMode(!workMode);
         startTimer();
@@ -188,8 +194,10 @@ function restartDisplay() {
     circularProgress.style.background =
       "conic-gradient(var(--clr-dark-blue) 360deg, var(--clr-lightest-blue) 0deg)";
   }
-  startBtn.style.display = "block";
-  pauseBtn.style.display = "none";
+  if (!autoStart) {
+    startBtn.style.display = "block";
+    pauseBtn.style.display = "none";
+  }
   startBtn.disabled = false;
   pauseBtn.disabled = false;
   clearInterval(progress);
