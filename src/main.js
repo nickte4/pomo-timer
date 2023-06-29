@@ -13,11 +13,13 @@ const timerEnd = 0;
 let now = timerStart;
 let progress;
 let audioVolume = retrieveVolAmt();
-const workAudio = new Audio("/success.mp3");
-const breakAudio = new Audio("/notif.mp3");
+const workAudio = new Audio();
+const breakAudio = new Audio();
 workAudio.volume = audioVolume;
+workAudio.src = "/public/success.mp3";
 workAudio.autoplay = true;
 breakAudio.volume = audioVolume;
+breakAudio.src = "/public/notif.mp3";
 breakAudio.autoplay = true;
 
 function retrieveAutoStart() {
