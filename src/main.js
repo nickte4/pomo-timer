@@ -16,7 +16,9 @@ let audioVolume = retrieveVolAmt();
 const workAudio = new Audio("/success.mp3");
 const breakAudio = new Audio("/notif.mp3");
 workAudio.volume = audioVolume;
+workAudio.autoplay = true;
 breakAudio.volume = audioVolume;
+breakAudio.autoplay = true;
 
 function retrieveAutoStart() {
   if (!window.localStorage.getItem("auto_start")) {
