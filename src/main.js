@@ -2,8 +2,6 @@ import "../styles/modern-normalize.css";
 import "../styles/style.css";
 import "../styles/components/timer.css";
 import "../styles/utils.css";
-import workCompletionSound from "../audio/success.mp3";
-import breakCompletionSound from "../audio/notif.mp3";
 
 let workMode = retrieveLastMode();
 let timerArr = retrieveTimerAmt();
@@ -15,8 +13,8 @@ const timerEnd = 0;
 let now = timerStart;
 let progress;
 let audioVolume = retrieveVolAmt();
-const workAudio = new Audio(workCompletionSound);
-const breakAudio = new Audio(breakCompletionSound);
+const workAudio = new Audio("../audio/success.mp3");
+const breakAudio = new Audio("../audio/notif.mp3");
 workAudio.volume = audioVolume;
 breakAudio.volume = audioVolume;
 
