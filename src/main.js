@@ -17,13 +17,13 @@ const workAudio = new Audio();
 const breakAudio = new Audio();
 workAudio.volume = audioVolume;
 workAudio.autoplay = true;
-workAudio.src =
-  "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
+// workAudio.src =
+//   "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
 workAudio.src = "/public/success.mp3";
 breakAudio.volume = audioVolume;
 breakAudio.autoplay = true;
-breakAudio.src =
-  "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
+// breakAudio.src =
+//   "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
 breakAudio.src = "/public/notif.mp3";
 
 function retrieveAutoStart() {
