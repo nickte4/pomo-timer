@@ -13,8 +13,8 @@ const timerEnd = 0;
 let now = timerStart;
 let progress;
 let audioVolume = retrieveVolAmt();
-const workAudio = new Audio("../audio/success.mp3");
-const breakAudio = new Audio("../audio/notif.mp3");
+const workAudio = new Audio("/success.mp3");
+const breakAudio = new Audio("/notif.mp3");
 workAudio.volume = audioVolume;
 breakAudio.volume = audioVolume;
 
