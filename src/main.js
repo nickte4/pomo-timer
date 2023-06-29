@@ -13,16 +13,31 @@ const timerEnd = 0;
 let now = timerStart;
 let progress;
 let audioVolume = retrieveVolAmt();
-const workAudio = new Audio();
-workAudio.autoplay = true;
-const breakAudio = new Audio();
-breakAudio.autoplay = true;
+const workAudio = new Audio("/success.mp3");
+const breakAudio = new Audio("/notif.mp3");
 workAudio.volume = audioVolume;
-workAudio.src =
-  "data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV";
 breakAudio.volume = audioVolume;
-breakAudio.src =
-  "data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV";
+
+function unlockAudios() {
+  let audiosToUnlock = [];
+  audiosToUnlock.push(workAudio);
+  audiosToUnlock.push(breakAudio);
+
+  document.body.addEventListener(
+    "touchstart",
+    () => {
+      if (audiosToUnlock) {
+        for (let audio of audiosToUnlock) {
+          audio.play();
+          audio.pause();
+          audio.currentTime = 0;
+        }
+        audiosToUnlock = null;
+      }
+    },
+    false
+  );
+}
 
 function retrieveAutoStart() {
   if (!window.localStorage.getItem("auto_start")) {
@@ -150,10 +165,8 @@ function startTimer() {
       startBtn.disabled = true;
       pauseBtn.disabled = true;
       if (workMode) {
-        workAudio.src = "/success.mp3";
         workAudio.play();
       } else {
-        breakAudio.src = "/notif.mp3";
         breakAudio.play();
       }
       if (autoStart) {
@@ -417,6 +430,7 @@ function listenToAllEvents() {
   listenForVolSliderChange();
 }
 
+unlockAudios();
 setInitMode();
 setInitialTimer();
 setInitSettingsTimerAmt();
